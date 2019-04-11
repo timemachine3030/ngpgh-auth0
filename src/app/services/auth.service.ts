@@ -8,6 +8,6 @@ export class AuthService {
   constructor() { }
 
   public isAuthenticated(): boolean {
-    return true;
+    return !!window.localStorage.getItem('auth_token');
   }
 }
