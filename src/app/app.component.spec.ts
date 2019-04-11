@@ -37,13 +37,13 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('btn.login').textContent).toContain('Log in');
+    expect(compiled.querySelector('.btn.login').textContent).toContain('Log in');
   });
 
   it('must have a logout button', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('btn.logout').textContent).toContain('Log out');
+    expect(compiled.querySelector('.btn.logout').textContent).toContain('Log out');
   });
 });
