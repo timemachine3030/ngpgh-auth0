@@ -1,17 +1,25 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import {AuthService} from './services/auth.service';
 
 describe('AppComponent', () => {
+  let auth: AuthService;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
       declarations: [
         AppComponent
       ],
+      imports: [
+        RouterTestingModule,
+      ],
+      providers: [
+        AuthService
+      ],
     }).compileComponents();
+
+    auth = TestBed.get(AuthService);
   }));
 
   it('should create the app', () => {
@@ -33,17 +41,22 @@ describe('AppComponent', () => {
     expect(compiled.querySelector('h1').textContent).toContain('Welcome to ngpgh!');
   });
 
-  it('must have a login button', () => {
+  it('must have a login button if not logged in', () => {
+    spyOn(auth, 'isAuthenticated').and.returnValue(false);
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.btn.login').textContent).toContain('Log in');
+    expect(compiled.querySelector('.btn.logout').hidden).toBeFalsy();
+    expect(compiled.querySelector('.btn.login').hidden).toBeTruthy();
   });
 
-  it('must have a logout button', () => {
+  it('must have a logout button is logged in', () => {
+    spyOn(auth, 'isAuthenticated').and.returnValue(true);
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.btn.logout').textContent).toContain('Log out');
+    expect(compiled.querySelector('.btn.logout').hidden).toBeTruthy();
+    expect(compiled.querySelector('.btn.login').hidden).toBeFalsy();
   });
+
 });
