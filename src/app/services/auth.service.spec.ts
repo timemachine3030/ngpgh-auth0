@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import {Auth0Callback, Auth0DecodedHash, Auth0ParseHashError, WebAuth} from 'auth0-js';
 
 import { AuthService } from './auth.service';
 
@@ -26,4 +27,27 @@ describe('AuthService', () => {
     });
   });
 
+  describe('decodeAuthHash', () => {
+    it('resolves a decoded hash', async () => {
+      spyOn(WebAuth.prototype, 'parseHash')
+        .and.callFake((cb: Auth0Callback<Auth0DecodedHash | null, Auth0ParseHashError>) => {
+          return cb(null, {accessToken: 'some token'});
+        });
+      const decoded: Auth0DecodedHash | null = await service.decodeAuthHash();
+      expect(decoded.accessToken).toBe('some token');
+    });
+    it('rejects any errors', async () => {
+      spyOn(WebAuth.prototype, 'parseHash')
+        .and.callFake((cb: Auth0Callback<Auth0DecodedHash | null, Auth0ParseHashError>) => {
+          return cb({error: 'problem', errorDescription: 'a big problem'}, null);
+        });
+      try {
+        await service.decodeAuthHash();
+      } catch (msg) {
+        expect(msg.error).toBe('problem');
+        return;
+      }
+      throw new Error('Promise should not be resolved');
+    });
+  });
 });
