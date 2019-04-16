@@ -25,7 +25,7 @@ describe('AuthService', () => {
     });
 
     it(`must return true if auth token in the session`, () => {
-      const futureTime = Date.now() + 10000; // tn seconds in the future
+      const futureTime = Date.now() + 10000; // ten seconds in the future
       window.localStorage.setItem('expires_at', JSON.stringify(futureTime));
       window.localStorage.setItem('auth_token', 'some token string');
       expect(service.isAuthenticated()).toBeTruthy();
@@ -87,9 +87,12 @@ describe('AuthService', () => {
         });
 
         expect(profile.name).toBe('Sam Pull');
-        const expectedExpire: Date = new Date();
-        expectedExpire.setTime(Date.now() + 15000);
-        expect(service.expiresAt).toEqual(expectedExpire, 'Token expires in 15 seconds');
+        const minExpire: Date = new Date();
+        minExpire.setTime(Date.now() + 14000);
+        const maxExpire: Date = new Date(minExpire);
+        maxExpire.setTime(Date.now() + 16000);
+        expect(service.expiresAt.getTime()).toBeGreaterThan(minExpire.getTime());
+        expect(service.expiresAt.getTime()).toBeLessThan(maxExpire.getTime());
       } catch (err) {
         expect(err).toBeFalsy();
       }
