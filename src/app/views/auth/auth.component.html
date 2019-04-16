@@ -1,3 +1,7 @@
-<p>
-  auth callback works!
-</p>
+<section class="content">
+
+  <div *ngIf="error">{{error.description}}</div>
+
+  {{ auth.profile | json }}
+</section>
+

@@ -7,9 +7,10 @@ export const environment = {
   auth: {
     clientID: 'uTQSA3jI6kvn3CZiGZL2EOaWkOSeMPM6',
     domain: 'timemachine3030.auth0.com',
-    audience: 'https://www.example.com/api',
+    // audience: 'https://www.example.com/api',
     redirect: 'http://localhost:4200/callback',
-    scope: 'openid profile email'
+    scope: 'openid profile email',
+    logoutUrl: 'http://localhost:4200/',
   }
 };
 

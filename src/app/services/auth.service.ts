@@ -19,7 +19,7 @@ export class AuthService {
       domain: environment.auth.domain,
       responseType: 'token',
       redirectUri: environment.auth.redirect,
-      audience: environment.auth.audience,
+      // audience: environment.auth.audience,
       scope: environment.auth.scope
     });
   }
@@ -60,6 +60,18 @@ export class AuthService {
     });
   }
 
+  /**
+   * Combine tested functions to process login
+   */
+  public async handleLoginCallback(): Promise<Auth0UserProfile | null> {
+    const decoded = await this.decodeAuthHash();
+    if (decoded) {
+      return await this.getUserProfile(decoded);
+    } else {
+      return null;
+    }
+  }
+
   public login() {
     this.auth0.authorize();
   }
@@ -68,7 +80,7 @@ export class AuthService {
     if (this.isAuthenticated()) {
       this.auth0.logout({
         clientID: environment.auth.clientID,
-        returnTo: window.location.host + '/'
+        returnTo: environment.auth.logoutUrl
       });
     }
     this.clearSession();
