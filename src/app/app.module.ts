@@ -5,14 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UnrestrictedComponent } from './views/unrestricted/unrestricted.component';
 import { PrivateComponent } from './views/private/private.component';
-import { CallbackComponent } from './views/callback/callback.component';
+import { AuthComponent } from './views/auth/auth.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UnrestrictedComponent,
     PrivateComponent,
-    CallbackComponent
+    AuthComponent
   ],
   imports: [
     BrowserModule,
