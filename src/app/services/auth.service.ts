@@ -28,7 +28,7 @@ export class AuthService {
     this.loadSession();
     try {
       const expired = Date.now() > this.expiresAt.getTime();
-      return this.authToken && !expired;
+      return !!this.authToken || !expired;
     } catch (err) {
       return false;
     }
@@ -58,6 +58,32 @@ export class AuthService {
         return resolve(profile);
       });
     });
+  }
+
+  public login() {
+    this.auth0.authorize();
+  }
+
+  public logout() {
+    if (this.isAuthenticated()) {
+      this.auth0.logout({
+        clientID: environment.auth.clientID,
+        returnTo: window.location.host + '/'
+      });
+    }
+    this.clearSession();
+  }
+
+  /**
+   * remove all the session properties from LocalStorage
+   */
+  private clearSession() {
+    this.authToken = null;
+    this.expiresAt = null;
+    this.profile = null;
+    window.localStorage.removeItem('auth_token');
+    window.localStorage.removeItem('profile');
+    window.localStorage.removeItem('expires_at');
   }
 
   /**

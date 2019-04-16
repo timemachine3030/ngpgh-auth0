@@ -41,22 +41,22 @@ describe('AppComponent', () => {
     expect(compiled.querySelector('h1').textContent).toContain('Welcome to ngpgh!');
   });
 
-  it('must have a login button if not logged in', () => {
+  it('must hide the logout button if not logged in', () => {
     spyOn(auth, 'isAuthenticated').and.returnValue(false);
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.btn.logout').hidden).toBeFalsy();
-    expect(compiled.querySelector('.btn.login').hidden).toBeTruthy();
-  });
-
-  it('must have a logout button is logged in', () => {
-    spyOn(auth, 'isAuthenticated').and.returnValue(true);
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('.btn.logout').hidden).toBeTruthy();
     expect(compiled.querySelector('.btn.login').hidden).toBeFalsy();
+  });
+
+  it('must hide the login button is logged in', () => {
+    spyOn(auth, 'isAuthenticated').and.returnValue(true);
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('.btn.logout').hidden).toBeFalsy();
+    expect(compiled.querySelector('.btn.login').hidden).toBeTruthy();
   });
 
 });

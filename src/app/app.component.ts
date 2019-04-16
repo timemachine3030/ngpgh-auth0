@@ -14,4 +14,12 @@ export class AppComponent {
 
   }
   title = 'ngpgh';
+
+  public login() {
+    this.auth.login();
+  }
+
+  public logout() {
+    this.auth.logout();
+  }
 }
