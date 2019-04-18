@@ -38,7 +38,7 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to ngpgh!');
+    expect(compiled.querySelector('h1').textContent).toContain('Angular + Auth0!');
   });
 
   it('must hide the logout button if not logged in', () => {
@@ -46,7 +46,7 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.btn.logout').hidden).toBeTruthy();
+    expect(compiled.querySelector('.private-buttons').hidden).toBeTruthy();
     expect(compiled.querySelector('.btn.login').hidden).toBeFalsy();
   });
 
@@ -55,7 +55,7 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.btn.logout').hidden).toBeFalsy();
+    expect(compiled.querySelector('.private-buttons').hidden).toBeFalsy();
     expect(compiled.querySelector('.btn.login').hidden).toBeTruthy();
   });
 

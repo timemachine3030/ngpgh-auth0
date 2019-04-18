@@ -1,22 +1,20 @@
 <nav class="navbar navbar-light bg-light justify-content-between">
   <a class="navbar-brand">ngPittsburgh</a>
   <form class="form-inline">
+    <section class="private-buttons" [hidden]="!auth.isAuthenticated()">
+      <button routerLink="/profile"
+              class="btn btn-outline-success mr-2 my-sm-0 profile" type="button">View Profile</button>
+      <button (click)="logout()"
+              class="btn btn-outline-success my-sm-0 logout" type="button">Log out</button>
+    </section>
     <button [hidden]="auth.isAuthenticated()" (click)="login()"
             class="btn btn-outline-success mr-2 my-sm-0 login" type="button">Log in</button>
-    <button [hidden]="!auth.isAuthenticated()" (click)="logout()"
-            class="btn btn-outline-success my-sm-0 logout" type="button">Log out</button>
   </form>
 </nav>
 <div style="text-align:center">
   <h1>
-    Welcome to {{ title }}!
+    Angular + Auth0!
   </h1>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a routerLink="/profile">User Profile</a></h2>
-  </li>
-</ul>
 
 <router-outlet></router-outlet>
