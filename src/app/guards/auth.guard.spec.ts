@@ -31,10 +31,10 @@ describe('AuthGuard', () => {
 
     it('should return false for a non-logged in user', inject([AuthGuard], (guard: AuthGuard) => {
       spyOn(auth, 'isAuthenticated').and.returnValue(false);
-      spyOn(router, 'navigate');
+      spyOn(auth, 'login');
 
       expect(guard.canActivate()).toEqual(false);
-      expect(router.navigate).toHaveBeenCalledWith(['/']);
+      expect(auth.login).toHaveBeenCalled();
     }));
   });
 });
