@@ -1,4 +1,5 @@
 import { TestBed, inject } from '@angular/core/testing';
+import {Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AuthService} from '../services/auth.service';
 
@@ -6,6 +7,7 @@ import { AuthGuard } from './auth.guard';
 
 describe('AuthGuard', () => {
   let auth: AuthService;
+  let router: Router;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -14,6 +16,7 @@ describe('AuthGuard', () => {
     });
 
     auth = TestBed.get(AuthService);
+    router = TestBed.get(Router);
   });
 
   it('should ...', inject([AuthGuard], (guard: AuthGuard) => {
@@ -28,7 +31,10 @@ describe('AuthGuard', () => {
 
     it('should return false for a non-logged in user', inject([AuthGuard], (guard: AuthGuard) => {
       spyOn(auth, 'isAuthenticated').and.returnValue(false);
+      spyOn(router, 'navigate');
+
       expect(guard.canActivate()).toEqual(false);
+      expect(router.navigate).toHaveBeenCalledWith(['/']);
     }));
   });
 });
